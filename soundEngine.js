@@ -1,7 +1,10 @@
 const defaultType = "sine";
 const sampleRate = 48000;
-var amp = .5;
-var triPeak = 0;
+const defaultAmp = .5;
+const defaultTriPeak = .5;
+
+var amp = defaultAmp;
+var triPeak = defaultTriPeak;
 
 var context;
 var notes = [];
@@ -53,6 +56,8 @@ function appendSample(value, thruNote) {
     soundArray.push(value);
 }
 
+
+//testfunction
 function playSound() {
     initSound();
     
@@ -63,11 +68,11 @@ function playSound() {
     var e = 43;
     var f = 44;
 
-    var melody = [b, -1, d, -1, e, -1, f, -1, e, -1, d, -1, b, -1, -1, -1, -1, a, d, b ];
+    let melody = [b, -1, d, -1, e, -1, f, -1, e, -1, d, -1, b, -1, -1, -1, -1, a, d, b ];
 
-    var noteLength = 1/8;
-    for(var i = 0; i < melody.length; i++) {
-        appendNote(melody[i], noteLength)
+    let noteLen = 1/8;
+    for(let i = 0; i < melody.length; i++) {
+        appendNote(melody[i], noteLen)
     }
     
 
@@ -150,7 +155,7 @@ function makeTriangleWave(freq, noteLength) {
             samp = (perc - itp2) / tp2 -1;
         }
 
-        appendSample(samp, thruNote);
+        appendSample(samp*amp, thruNote);
     }
 }
 
@@ -159,7 +164,7 @@ function makeNoise(noteLength) {
     for(var i=0; i < sampleRate * noteLength; i++)
     {
         var thruNote = i/sxn;
-        appendNote(Math.random()*2 -1, thruNote);
+        appendSample((Math.random()*2 -1)*amp, thruNote);
     }
 }
 

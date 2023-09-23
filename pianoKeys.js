@@ -4,10 +4,13 @@ const playbtn = document.querySelector("#playbtn")
 
 const blackKeys = [2,4,-1,7,9,11]
 const whiteKeys = [1,3,5,6,8,10,12]
-
 const keybinds = ["KeyZ", "KeyS", "KeyX", "KeyD", "KeyC", "KeyV", "KeyG", "KeyB", "KeyH", "KeyN", "KeyJ", "KeyM"];
 
+const defaultNoteLength = 1/8
+
 var octaveMod = 38
+var noteLength = defaultNoteLength
+var waveType = defaultType
 
 var heldKeys = []
 var heldNotes = []
@@ -62,9 +65,9 @@ function initPiano() {
 
     window.addEventListener("keydown", (key) => {
         let keyIdx = keybinds.indexOf(key.code) +1
-        if(keyIdx != -1 && !heldNotes.includes(keyIdx)){
+        if(keyIdx > 0 && !heldNotes.includes(keyIdx)){
             heldNotes.push(keyIdx)
-            appendNote(keyIdx + octaveMod, 1/8)
+            appendNote(keyIdx + octaveMod, noteLength, waveType)
             playBuffer()
             drawKeys()
     
@@ -80,7 +83,9 @@ function initPiano() {
         }
     })
 
-    playbtn.removeEventListener('click', initPiano)
+    //playbtn.removeEventListener('click', initPiano)
+    playbtn.remove()
+    canvas.style.display = "block"
 }
 
  
