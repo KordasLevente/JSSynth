@@ -1,25 +1,27 @@
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
+ctx.font = "30px Arial"
 const playbtn = document.querySelector("#playbtn")
 
 const blackKeys = [2,4,-1,7,9,11]
-const whiteKeys = [1,3,5,6,8,10,12]
-const keybinds = ["KeyZ", "KeyS", "KeyX", "KeyD", "KeyC", "KeyV", "KeyG", "KeyB", "KeyH", "KeyN", "KeyJ", "KeyM"];
+const whiteKeys = [1,3,5,6,8,10,12,13]
+const keybinds = ["y", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", ","];
+//const keybinds = ["KeyZ", "KeyS", "KeyX", "KeyD", "KeyC", "KeyV", "KeyG", "KeyB", "KeyH", "KeyN", "KeyJ", "KeyM"];
 
 const defaultNoteLength = 1/8
 
 var octaveMod = 38
 var noteLength = defaultNoteLength
 var waveType = defaultType
+var holdNotes = false;
 
-var heldKeys = []
 var heldNotes = []
 
 
 
 function drawKeys() {
     //white keys
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
         drawWhitekey(i, heldNotes.includes(whiteKeys[i]))
     }
 
@@ -41,6 +43,9 @@ function drawWhitekey(position, isPressed) {
     }
     ctx.fillStyle = "#000"
     ctx.strokeRect(position * 100,0,100,400)
+
+    let letter = keybinds[whiteKeys[position]-1]
+    ctx.fillText(letter, position*100+40, 350)
 }
 
 function drawBlackkey(position, isPressed) {
@@ -53,6 +58,10 @@ function drawBlackkey(position, isPressed) {
     }
     ctx.fillRect(position*100 + 75,0,50,250)
     ctx.strokeRect(position*100 + 75,0,50,250)
+
+    ctx.fillStyle = "#FFF"
+    let letter = keybinds[blackKeys[position]-1]
+    ctx.fillText(letter, (position*100)+95, 230)
 }
 
 
@@ -64,18 +73,17 @@ function initPiano() {
     playbtn.disabled = true
 
     window.addEventListener("keydown", (key) => {
-        let keyIdx = keybinds.indexOf(key.code) +1
+        let keyIdx = keybinds.indexOf(key.key) +1
         if(keyIdx > 0 && !heldNotes.includes(keyIdx)){
             heldNotes.push(keyIdx)
-            appendNote(keyIdx + octaveMod, noteLength, waveType)
-            playBuffer()
+            playNote(keyIdx + octaveMod, noteLength, holdNotes, waveType)
             drawKeys()
-    
+            
         }
     })
 
     window.addEventListener("keyup", (key) => {
-        let keyIdx = keybinds.indexOf(key.code) +1
+        let keyIdx = keybinds.indexOf(key.key) +1
         if(heldNotes.includes(keyIdx)){
             heldNotes.splice(heldNotes.indexOf(keyIdx), 1)
             drawKeys()
