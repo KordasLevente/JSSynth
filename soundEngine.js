@@ -176,7 +176,11 @@ function makeSilence(noteLength) {
     }
 }
 
-function playBuffer() {
+function clearBuffer(buffer = soundArray) {
+    buffer = []
+}
+
+function playBuffer(clearBuffer = true) {
     var arrayBuffer = context.createBuffer(2, soundArray.length, context.sampleRate);
     for (var channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
         var samples = arrayBuffer.getChannelData(channel);
@@ -190,7 +194,7 @@ function playBuffer() {
     source.buffer = arrayBuffer;
     source.connect(context.destination);
     source.start();
-    soundArray = []
+    if(clearBuffer) clearBuffer
 }
 
 //document.querySelector("#playbtn").addEventListener('click', playSound)
