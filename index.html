@@ -27,16 +27,19 @@
             </div>
             <br>
             <label for="amp">Amplification:</label>
-            <input type="number" name="amp" step="0.1" min = "0" max="1" id="ampInput" value=".5"><br>
+            <input type="range" name="amp" step="0.1" min = "0" max="1" id="ampInput" value=".5"><br>
+            <label for="holdable">Holdable notes</label>
+            <input type="checkbox" name="holdable" id="holdInput"><br>
             <label for="oct">Octave:</label>
             <input type="button" value="-" id="octMinus">
             <input type="button" value="+" id="octPlus">
         </form>
     </div>
     <hr>
-    <canvas id="piano" width="700px" height="400px" style="border: solid 2px black"></canvas>
+    <canvas id="piano" width="800px" height="400px" style="border: solid 2px black"></canvas>
 
-    <script src="soundEngine.js"></script>
+    <!-- <script src="waveform.js"></script> -->
+    <script src="soundEngineOld.js"></script>
     <script src="pianoKeys.js"></script>
     <script src="synthSettingsUI.js"></script>
 </body>

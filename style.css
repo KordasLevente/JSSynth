@@ -20,3 +20,7 @@ canvas {
 #triPeakDiv {
     display: none;
 }
+
+#holdInput {
+    display: none;
+}

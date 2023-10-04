@@ -10,6 +10,7 @@ const keybinds = ["y", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", ",
 
 const defaultNoteLength = 1/8
 
+
 var octaveMod = 38
 var noteLength = defaultNoteLength
 var waveType = defaultType
@@ -68,8 +69,8 @@ function drawBlackkey(position, isPressed) {
 
 
 function initPiano() {
-    drawKeys()
     initSound()
+    drawKeys()
     playbtn.disabled = true
 
     window.addEventListener("keydown", (key) => {
